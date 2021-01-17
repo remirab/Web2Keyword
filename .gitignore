@@ -134,3 +134,6 @@ dmypy.json
 # test files and folders
 temp/
 test.py
+
+# Web drivers folder
+cache/drivers
