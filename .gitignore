@@ -128,6 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# .vscode folder
+.vscode/
+
 # test files and folders
 temp/
 test.py
