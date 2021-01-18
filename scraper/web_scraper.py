@@ -18,8 +18,7 @@ class Crawler:
             pass
         driver.close()
         raw_data = self.__raw_body_extractor(html)
-        clean_data = self.__regex(raw_data)
-        return clean_data
+        return self.__regex(raw_data)
 
     def __web_driver(self, driver_name: str, drivers_dict: dict):
         driver_path = ''
