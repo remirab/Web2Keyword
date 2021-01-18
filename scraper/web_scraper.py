@@ -1,14 +1,13 @@
 import re
 import time
-from cache import drivers
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 
 class Crawler:
-    def spider(self, driver_name: str, url: str):
-        driver = self.__web_driver(driver_name=driver_name)
+    def spider(self, driver_name: str, url: str, drivers_dict: dict):
+        driver = self.__web_driver(driver_name=driver_name, drivers_dict=drivers_dict)
         html = "<html><head></head><body></body></html>"
         try:
             driver.get(url)
@@ -22,10 +21,10 @@ class Crawler:
         clean_data = self.__regex(raw_data)
         return clean_data
 
-    def __web_driver(self, driver_name: str):
+    def __web_driver(self, driver_name: str, drivers_dict: dict):
         driver_path = ''
         driver = None
-        for key, value in drivers.items():
+        for key, value in drivers_dict.items():
             if driver_name in key.lower():
                 driver_path = value
                 break
