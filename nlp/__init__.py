@@ -1,1 +1,1 @@
-from .topic_modeling import Gensim
+from .topic_modeling import Gensim, FastSimQuery
