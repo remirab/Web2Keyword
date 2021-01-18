@@ -1,10 +1,18 @@
 import os
 import settings
 import logging
+from nltk import download
+import gensim.downloader as api
 from logging.handlers import TimedRotatingFileHandler
 
-web_drivers_dir_path = os.path.join(".", "cache", "drivers")
 
+# load Word2Vec model for gensim package usage --IMPORTANT!!! HEAVY LOADING MEMORY INTENSIVE
+word2vec_model = api.load('word2vec-google-news-300')
+
+# downloading NLTK package stop words for preprocessing text body
+download('stopwords', quiet=True)
+
+web_drivers_dir_path = os.path.join(".", "cache", "drivers")
 if not os.path.exists(web_drivers_dir_path):
     os.mkdir(web_drivers_dir_path)
 
