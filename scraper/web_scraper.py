@@ -9,7 +9,7 @@ from selenium.common.exceptions import WebDriverException
 class Crawler:
     def spider(self, driver_name: str, url: str):
         driver = self.__web_driver(driver_name=driver_name)
-        html = None
+        html = "<html><head></head><body></body></html>"
         try:
             driver.get(url)
             time.sleep(10)
@@ -49,8 +49,7 @@ class Crawler:
     
     def __regex(self, raw_text: str)-> str:
         new_body = re.sub('\n', ' ', raw_text)
-        new_body = re.sub(' +', ' ', new_body)
-        return new_body
+        return re.sub(' +', ' ', new_body)
 
     def __raw_body_extractor(self, html: str)-> str:
         soup = BeautifulSoup(html, 'html.parser')
