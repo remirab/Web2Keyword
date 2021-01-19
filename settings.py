@@ -6,9 +6,9 @@ LOG = True
 # Log level
 LOG_LEVEL = logging.DEBUG
 # API host
-HOST = "0.0.0.0"
+HOST = "127.0.0.1"
 # API port
-PORT = 6000
+PORT = 8080
 # TODO Set this variables into right state for production ! IMPORTANT
 DEBUG = True
 PRODUCTION = True
