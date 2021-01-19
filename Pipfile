@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
 
 [packages]
 numpy = "*"
@@ -18,6 +17,8 @@ bs4 = "*"
 nltk = "*"
 gensim = "*"
 annoy = "*"
+clean-text = "*"
+Unidecode = "*"
 Pipfile = "*"
 
 [requires]
