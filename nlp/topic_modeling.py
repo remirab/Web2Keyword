@@ -9,8 +9,26 @@ from collections import defaultdict
 from nltk.corpus import stopwords
 
 class Briefing:
+    __instance__ = None
+
     def __init__(self):
+        """
+        Constructor
+        """
         self.en_stop_words = stopwords.words('english')
+        if Briefing.__instance__ is None:
+            Briefing.__instance__ = self
+        else:
+            raise Exception("You can not create another Briefing class. Use Briefing.get_instance() instead.")
+
+    @staticmethod
+    def get_instance():
+        """
+        Static method to fetch the current instance.
+        """
+        if not Briefing.__instance__:
+            Briefing()
+        return Briefing.__instance__
 
     def preprocess(self, sentence: str):
         en_stop_words = self.en_stop_words
@@ -24,10 +42,28 @@ class Briefing:
             return keywords(text=text_body, words=n_words, scores=True, lemmatize=False, split=True)
 
 class FastSimQuery:
+    __instance__ = None
+
     def __init__(self):
+        """
+        Constructor
+        """
         self.text8_path = api.load('text8', return_path=True)
         self.text8_model = Word2Vec(Text8Corpus(self.text8_path))
         self.annoy_index = AnnoyIndexer(model=self.text8_model, num_trees=100)
+        if FastSimQuery.__instance__ is None:
+            FastSimQuery.__instance__ = self
+        else:
+            raise Exception("You can not create another FastSimQuery class. Use FastSimQuery.get_instance() instead.")
+
+    @staticmethod
+    def get_instance():
+        """
+        Static method to fetch the current instance.
+        """
+        if not FastSimQuery.__instance__:
+            FastSimQuery()
+        return FastSimQuery.__instance__
 
     def processor(self, word_vec: str, annoy_indexer: bool):
         if annoy_indexer:
@@ -45,11 +81,32 @@ class FastSimQuery:
         return word in self.text8_model.wv.vocab
 
 class WordToVec:
+    __instance__ = None
+
     def __init__(self):
+        """
+        Constructor
+        """
         self.word2vec_model = api.load('word2vec-google-news-300')
+        if WordToVec.__instance__ is None:
+            WordToVec.__instance__ = self
+        else:
+            raise Exception("You can not create another WordToVec class. Use WordToVec.get_instance() instead.")
+
+    @staticmethod
+    def get_instance():
+        """
+        Static method to fetch the current instance.
+        """
+        if not WordToVec.__instance__:
+            WordToVec()
+        return WordToVec.__instance__
 
     def similarity(self, *words)-> float:
         return self.word2vec_model.similarity(words[0], words[1])
 
     def most_similar(self, positive: list, negative: list, topn: int=5):
         return self.word2vec_model.most_similar(positive=positive, negative=negative, topn=topn)
+
+    def word_in_vocab(self, word: str)-> bool:
+        return word in self.word2vec_model.wv.vocab
