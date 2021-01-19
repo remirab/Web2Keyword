@@ -6,8 +6,28 @@ from selenium.common.exceptions import WebDriverException
 
 
 class Crawler:
+    __instance__ = None
+     
+    def __init__(self):
+        """
+        Constructor
+        """
+        if Crawler.__instance__ is None:
+            Crawler.__instance__ = self
+        else:
+            raise Exception("You can not create another Crawler class. Use Crawler.get_instance() instead.")
+
+    @staticmethod
+    def get_instance():
+        """
+        Static method to fetch the current instance.
+        """
+        if not Crawler.__instance__:
+            Crawler()
+        return Crawler.__instance__
+
     def spider(self, driver_name: str, url: str, drivers_dict: dict):
-        driver = self.__web_driver(driver_name=driver_name, drivers_dict=drivers_dict)
+        driver = self.web_driver(driver_name=driver_name, drivers_dict=drivers_dict)
         html = "<html><head></head><body></body></html>"
         try:
             driver.get(url)
@@ -17,10 +37,10 @@ class Crawler:
             print(f"Web driver error :::::::: {exc} ")
             pass
         driver.close()
-        raw_data = self.__raw_body_extractor(html)
-        return self.__regex(raw_data)
+        raw_data = self.raw_body_extractor(html)
+        return self.regex(raw_data)
 
-    def __web_driver(self, driver_name: str, drivers_dict: dict):
+    def web_driver(self, driver_name: str, drivers_dict: dict):
         driver_path = ''
         driver = None
         for key, value in drivers_dict.items():
@@ -45,10 +65,10 @@ class Crawler:
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         return driver
     
-    def __regex(self, raw_text: str)-> str:
+    def regex(self, raw_text: str)-> str:
         new_body = re.sub('\n', ' ', raw_text)
         return re.sub(' +', ' ', new_body)
 
-    def __raw_body_extractor(self, html: str)-> str:
+    def raw_body_extractor(self, html: str)-> str:
         soup = BeautifulSoup(html, 'html.parser')
         return soup.get_text()
