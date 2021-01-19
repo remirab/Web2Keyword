@@ -1,1 +1,1 @@
-from .topic_modeling import Gensim, FastSimQuery
+from .topic_modeling import Briefing, FastSimQuery, WordToVec
