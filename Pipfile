@@ -17,6 +17,7 @@ selenium = "*"
 bs4 = "*"
 nltk = "*"
 gensim = "*"
+annoy = "*"
 Pipfile = "*"
 
 [requires]
