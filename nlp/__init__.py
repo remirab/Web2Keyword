@@ -1,2 +1,2 @@
-from .topic_modeling import Briefing, FastSimQuery, WordToVec
-from .filteration import Filteration
+from .topic_modeling import Digester, FastSimQuery, WordToVec
+from .filteration import Purificator
