@@ -17,22 +17,36 @@ sequenceDiagram
 ```
 
 ## GunicornWSGI
-Gunicorn Web Service Gateway Interface runs Flask application API production friendly
+[Gunicorn](https://gunicorn.org/) Web Service Gateway Interface runs Flask application API production friendly. The Gunicorn server is broadly compatible with a number of web frameworks, simply implemented, light on server resources and fairly fast.
 
 ## FlaskAPI
-Generates RESTfulAPI application via Flask package ready for Client/Server requests through POST/GET methods.
+Generates RESTfulAPI application via [Flask](https://en.wikipedia.org/wiki/Flask_(web_framework)) package ready for Client/Server requests through POST/GET methods. To name a few of its feature:
+* Development server and debugger
+* Integrated support for unit testing
+* RESTful request dispatching
 
-## Scraper
-Publish crawling web spiders to capture URL text body via Selenium automation and Chrome/Firefox latest Web Drivers in order to generate most accurate rendering of all human readable text body of input URL Webpage.
+## Crawler
+Publish crawling web spiders to capture URL text body via [Selenium](https://www.selenium.dev/) automation and Chrome/Firefox latest Web Drivers in order to generate most accurate rendering of all human readable text body of input URL Webpage.
 #### Liberaries
-+ Selenium: great rendering of static and dynamic pages with the capability to generate dedicated contex-aware scrapers for specific websites. 
-+ BeautifulSoup: powerful yet simple featureful HTML parser. 
++ **Selenium:** great rendering of static and dynamic pages with the capability to generate dedicated contex-aware scrapers for specific websites. 
++ **BeautifulSoup:** powerful yet simple featureful HTML parser.
+### important Methods
+- **Crawler.spider()**
+- **Crawler.raw_body_extractor()**
  
 ## Purificator
-Performing text cleaning, with removing English stop words. Also it will double check existence of each word in NLP model vocabulary corpus. 
+Performing text cleaning, with removing English stop words. Also it will double check existence of each word in NLP model vocabulary corpus.
+### Important Methods
+- **Purificator.text_cleaner()**
+- **Purificator.non_vocab_cleaner()**
 
 ## Word2Vec
-Runs Pre-Trained Google Word2Vec NLP model in order to convert word space to vector space and perform Similarity comparision of cross referenced input text corpus.
+Runs pre-Trained [Google Word2Vec](https://code.google.com/archive/p/word2vec/) NLP model in order to convert word-space to vector-space and perform super fast Similarity comparision on huge cross-referenced input_text and url_contents corpus.
+### Liberaries
++ **GenSim:** One of the most well-known professionally-crafted `Natural Language Processing` liberaries with excellent reference API. [GenSim](https://radimrehurek.com/gensim/) is my faivorate, but in future improvements I will experiment [TensorFlow](https://www.tensorflow.org/) implementation of Word2Vec model as well. 
+### important Methods
+- **Word2Vec.similarity()**
+- **Word2Vec.most_similar()**
 
 # FAQ
 ## How to install and use
