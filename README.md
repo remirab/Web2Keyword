@@ -46,3 +46,15 @@ Initialize the package with bash script `initializer.sh`. Make it executable and
 $ chmod +x initializer.sh
 $ ./initializer.sh
 ```
+After successful package initializing, the environment is ready to run the Web Server Gateway Interface. Please consider server resources utilization. Because this version of package is somehow hugely resource intensive:
+
+| CPU cores     | RAM           |
+| ------------- |-------------  |
+| 4_cores       | 16 GB         |
+| at least      | at least      |
+
+```bash
+$ ./run_server.sh
+```
+
+
