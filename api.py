@@ -42,6 +42,9 @@ def create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS):
             url_contents_cleaned = list(set(purify.stop_word_cleaner(text_body=url_contents_cleaned)))
             filtered_url_contents = purify.non_vocab_cleaner(url_contents_cleaned)
             filtered_product_list = purify.non_vocab_cleaner(input_data["product_list"])
+            if len(filtered_product_list) == 0:
+                return Response(f"Your input sentences or words was not present in model vocabulary. Please change them.", status=404, content_type="application/json")
+            
             result = {}
             for url_word in filtered_url_contents:
                 cross_sim = [word2vec.similarity(url_word, input_word) for input_word in filtered_product_list]
