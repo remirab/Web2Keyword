@@ -22,7 +22,7 @@ def ts_datetime(val):
     """Used if *val* is an instance of datetime.datetime."""
     return val.isoformat() + "Z"
 
-def create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS):
+def create_app(crawling, digesting, purify, word2vec, DRIVER_PATH):
     app = Flask(__name__)
 
     @app.route("/query", methods=["POST", "GET"])
@@ -37,7 +37,7 @@ def create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS):
             
             uid = uuid.uuid5(uuid.NAMESPACE_URL, input_data["url"])
 
-            url_contents = crawling.spider(driver_name="chrome", url=input_data["url"], drivers_dict=WEB_DRIVERS)
+            url_contents = crawling.spider(url=input_data["url"], driver_path=DRIVER_PATH)
             url_contents_cleaned = purify.text_cleaner(text_body=url_contents)
             url_contents_cleaned = list(set(purify.stop_word_cleaner(text_body=url_contents_cleaned)))
             filtered_url_contents = purify.non_vocab_cleaner(url_contents_cleaned)
@@ -56,7 +56,7 @@ def create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS):
             
             return Response(json.dumps(payload, default=to_serializable), status=200, content_type="application/json")
         except Exception as ex:
-            return Response(f"Something going wrong:\n{str(ex)}", status=500)
+            return Response(f"Something goes wrong:\n{str(ex)}", status=500)
 
     @app.route("/test", methods=["GET"])
     def test_api():
