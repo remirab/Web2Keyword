@@ -13,7 +13,6 @@ warnings.filterwarnings(action='ignore',category=FutureWarning,module='gensim')
 
 # local imports
 import settings
-from cache import WEB_DRIVERS
 from scraper import Crawler
 from nlp import Digester, WordToVec, Purificator
 
@@ -32,4 +31,8 @@ if __name__ == "__main__":
         'workers': number_of_workers(),
         "timeout": 120
     }
-    MyCustomApplication(create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS), options).run()
+    with open('driver.ini') as file:
+        line = file.readlines()
+        DRIVER_PATH = eval(line[0].split('=')[1])
+        file.close()
+    MyCustomApplication(create_app(crawling, digesting, purify, word2vec, DRIVER_PATH), options).run()
