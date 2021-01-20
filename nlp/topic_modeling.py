@@ -8,7 +8,7 @@ from gensim.models.word2vec import Text8Corpus
 from collections import defaultdict
 from nltk.corpus import stopwords
 
-class Briefing:
+class Digester:
     __instance__ = None
 
     def __init__(self):
@@ -16,19 +16,19 @@ class Briefing:
         Constructor
         """
         self.en_stop_words = stopwords.words('english')
-        if Briefing.__instance__ is None:
-            Briefing.__instance__ = self
+        if Digester.__instance__ is None:
+            Digester.__instance__ = self
         else:
-            raise Exception("You can not create another Briefing class. Use Briefing.get_instance() instead.")
+            raise Exception("You can not create another Digester class. Use Digester.get_instance() instead.")
 
     @staticmethod
     def get_instance():
         """
         Static method to fetch the current instance.
         """
-        if not Briefing.__instance__:
-            Briefing()
-        return Briefing.__instance__
+        if not Digester.__instance__:
+            Digester()
+        return Digester.__instance__
 
     def preprocess(self, sentence: str):
         en_stop_words = self.en_stop_words
