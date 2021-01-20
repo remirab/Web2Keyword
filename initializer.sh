@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# grant ROOT privileges
 echo "$(whoami)"
 [ "$UID" -eq 0 ] || exec sudo "$0" "$@"
 
@@ -10,6 +11,7 @@ cd "$parent_path"
 rm -r $parent_path/cache
 mkdir $parent_path/cache
 mkdir $parent_path/cache/drivers
+mkdir $parent_path/logs
 
 # check install unzip dpkg
 if dpkg --get-selections | grep "unzip[[:space:]]*install$" >/dev/null
@@ -29,15 +31,18 @@ if dpkg --get-selections | grep "pipenv[[:space:]]*install$" >/dev/null
         fi
 fi
 
+# download web drivers
 echo "Downloading Chrome web_driver for Selenium automation package ..."
 wget https://chromedriver.storage.googleapis.com/88.0.4324.27/chromedriver_linux64.zip -P $parent_path/cache/drivers
 
 echo "Downloading Firefox web_driver for Selenium automation package ..."
 wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz -P $parent_path/cache/drivers
 
+# unzip web drivers
 unzip -q $parent_path/cache/drivers/chromedriver_linux64.zip -d $parent_path/cache/drivers 
 tar -xvzf $parent_path/cache/drivers/geckodriver-v0.29.0-linux64.tar.gz -C $parent_path/cache/drivers 
 
+# cleanup and setup python virtual env
 pipenv --rm
 pipenv install --skip-lock
 
