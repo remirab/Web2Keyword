@@ -41,6 +41,10 @@ and then change into package root directory
 ```bash
 $ cd /path/to/Word2Vec
 ```
+**Important: Please install latest version of FireFox borwser (driver>=0.29.0)**. The `Scraper` module uses Firefox [geckodriver](https://github.com/mozilla/geckodriver) to artificially renders full webpage regarding JavaScript objects that rendered server-side, not inside static HTMLs pages. For future improvements I considered to use `PhantomJS headless driver` that hopefully overcomes this issue.
+```bash
+$ sudo apt install firefox
+```
 Initialize the package with bash script `initializer.sh`. Make it executable and then run. Please pay attention that this initializer needs `sudo` privileges for some parts to perform correctly. You can take look at the script contents in the root path of the package. Considering [GenSim](https://pypi.org/project/gensim/) usage as core engine and [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) as vocabulary corpus of all models, downloading approximately 1.8 GB will happen at the end of initializer. You can skip this step, but with first package startup, the download process will run automatically. 
 ```bash
 $ chmod +x initializer.sh
@@ -49,12 +53,16 @@ $ ./initializer.sh
 After successful package initializing, the environment is ready to run the Web Server Gateway Interface. Please consider server resources utilization. Because this version of package is somehow hugely resource intensive:
 
 | CPU cores     | RAM           |
-| ------------- |-------------  |
-| 4_cores       | 16 GB         |
+| ------------- | ------------- |
+| 4 cores       | 16 GB         |
 | at least      | at least      |
 
+This script will start GunicornWSGI application with number of `ceil(n_process_cores / 2)` workers and `settings.HOST:settings.PORT` options considering `workers_timeout = 60s` each. If you need to change this options please make changes to `settings.py` in root folder.
+> default Host= "127.0.0.1"
+> default Port= "8080"
+> default workers_timeout= 60
 ```bash
 $ ./run_server.sh
 ```
 
-
+```
