@@ -1,5 +1,5 @@
 import json
-import uuid
+# import uuid
 import settings
 import numpy as np
 from functools import singledispatch
@@ -31,27 +31,26 @@ def create_app(crawling, digesting, purify, word2vec, DRIVER_PATH):
         try:
             input_data = {}
             input_data.update({"url": request.args.get("url")})
-            input_data.update({"product_list": eval(request.args.get("product_list"))})
+            input_data.update({"input_list": eval(request.args.get("input_list"))})
             
-            input_data.update({ 'product_list': list(set(word for item in [sentence.split(" ") for sentence in input_data["product_list"]] for word in item)) })
+            input_data.update({ 'input_list': list(set(word for item in [sentence.split(" ") for sentence in input_data["input_list"]] for word in item)) })
             
-            uid = uuid.uuid5(uuid.NAMESPACE_URL, input_data["url"])
+            # uid = uuid.uuid5(uuid.NAMESPACE_URL, input_data["url"])
 
             url_contents = crawling.spider(url=input_data["url"], driver_path=DRIVER_PATH)
             url_contents_cleaned = purify.text_cleaner(text_body=url_contents)
             url_contents_cleaned = list(set(purify.stop_word_cleaner(text_body=url_contents_cleaned)))
             filtered_url_contents = purify.non_vocab_cleaner(url_contents_cleaned)
-            filtered_product_list = purify.non_vocab_cleaner(input_data["product_list"])
-            if len(filtered_product_list) == 0:
+            filtered_input_list = purify.non_vocab_cleaner(input_data["input_list"])
+            if (len(filtered_input_list) == 0 or len(filtered_url_contents) == 0):
                 return Response(f"Your input sentences or words was not present in model vocabulary. Please change them.", status=404, content_type="application/json")
             
             result = {}
             for url_word in filtered_url_contents:
-                cross_sim = [word2vec.similarity(url_word, input_word) for input_word in filtered_product_list]
+                cross_sim = [word2vec.similarity(url_word, input_word) for input_word in filtered_input_list]
                 max_cross_sim = max(cross_sim)
                 if max_cross_sim > 0.09:
                     result.update({url_word: max_cross_sim})
-
             payload = dict(sorted(result.items(), key=lambda item: item[1], reverse=True)[0:20])
             
             return Response(json.dumps(payload, default=to_serializable), status=200, content_type="application/json")
@@ -64,4 +63,3 @@ def create_app(crawling, digesting, purify, word2vec, DRIVER_PATH):
         return Response("It works!", status=200)
 
     return app
-    
