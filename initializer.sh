@@ -1,35 +1,17 @@
 #!/bin/bash
 
-# grant ROOT privileges
-echo "$(whoami)"
-[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 # cleanup web drivers folder
-rm -r $parent_path/cache
-mkdir $parent_path/cache
+rm -r $parent_path/cache/drivers
 mkdir $parent_path/cache/drivers
 mkdir $parent_path/logs
 
-# check install unzip dpkg
-if dpkg --get-selections | grep "unzip[[:space:]]*install$" >/dev/null
-    then
-        if apt-get install unzip >/dev/null
-            then
-            echo "Successfully installed unzip dpkg"
-        fi
-fi
-
-# check install pipenv dpkg
-if dpkg --get-selections | grep "pipenv[[:space:]]*install$" >/dev/null
-    then
-        if apt-get install pipenv 
-            then
-            echo "Successfully installed pipenv dpkg"
-        fi
-fi
+sudo apt-get install unzip
+echo "Successfully installed unzip dpkg"
+sudo apt-get install pipenv
+echo "Successfully installed pipenv dpkg"
 
 # download web drivers
 echo "Downloading Chrome web_driver for Selenium automation package ..."
