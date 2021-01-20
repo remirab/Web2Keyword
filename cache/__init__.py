@@ -16,10 +16,10 @@ web_drivers_dir_path = os.path.join(".", "cache", "drivers")
 if not os.path.exists(web_drivers_dir_path):
     os.mkdir(web_drivers_dir_path)
 
-drivers = {}
+WEB_DRIVERS = {}
 for _, _, _file in os.walk(web_drivers_dir_path):
     for f in sorted(_file):
-        drivers.update({f: os.path.join(".", "cache", "drivers", f)})
+        WEB_DRIVERS.update({f: os.path.join(".", "cache", "drivers", f)})
 
 logger = logging.getLogger('main_logger')
 logger.setLevel(settings.LOG_LEVEL)
