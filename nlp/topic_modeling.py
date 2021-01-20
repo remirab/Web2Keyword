@@ -1,11 +1,8 @@
-import gensim
 import gensim.downloader as api
-from gensim.summarization import keywords, textcleaner
-from gensim import corpora
+from gensim.summarization import keywords
 from gensim.models import Word2Vec
 from gensim.similarities.index import AnnoyIndexer
 from gensim.models.word2vec import Text8Corpus
-from collections import defaultdict
 from nltk.corpus import stopwords
 
 class Digester:
