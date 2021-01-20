@@ -23,10 +23,13 @@ Gunicorn Web Service Gateway Interface runs Flask application API production fri
 Generates RESTfulAPI application via Flask package ready for Client/Server requests through POST/GET methods.
 
 ## Scraper
-Publish crawling spiders to capture URL text body via Selenium automation and Chrome/Firefox latest Web Drivers in order to generate most accurate rendering of all human readable text body of input URL Webpage.
+Publish crawling web spiders to capture URL text body via Selenium automation and Chrome/Firefox latest Web Drivers in order to generate most accurate rendering of all human readable text body of input URL Webpage.
+#### Liberaries
++ Selenium: great rendering of static and dynamic pages with the capability to generate dedicated contex-aware scrapers for specific websites. 
++ BeautifulSoup: powerful yet simple featureful HTML parser. 
  
 ## Purificator
-Performing text cleaning, removing Eng stop words and also double check existance of word in NLP model vocabulary corpus. 
+Performing text cleaning, with removing English stop words. Also it will double check existence of each word in NLP model vocabulary corpus. 
 
 ## Word2Vec
 Runs Pre-Trained Google Word2Vec NLP model in order to convert word space to vector space and perform Similarity comparision of cross referenced input text corpus.
@@ -58,11 +61,9 @@ After successful package initializing, the environment is ready to run the Web S
 | at least      | at least      |
 
 This script will start GunicornWSGI application with number of `ceil(n_process_cores / 2)` workers and `settings.HOST:settings.PORT` options considering `workers_timeout = 60s` each. If you need to change this options please make changes to `settings.py` in root folder.
-> default Host= "127.0.0.1"
-> default Port= "8080"
-> default workers_timeout= 60
+
+> defaults: Host= "127.0.0.1", Port= "8080", workers_timeout= 60
+
 ```bash
 $ ./run_server.sh
-```
-
 ```
