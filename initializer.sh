@@ -13,16 +13,13 @@ echo "Successfully installed unzip dpkg"
 sudo apt-get install pipenv
 echo "Successfully installed pipenv dpkg"
 
-# download web drivers
-echo "Downloading Chrome web_driver for Selenium automation package ..."
-wget https://chromedriver.storage.googleapis.com/88.0.4324.27/chromedriver_linux64.zip -P $parent_path/cache/drivers
-
-echo "Downloading Firefox web_driver for Selenium automation package ..."
-wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz -P $parent_path/cache/drivers
-
-# unzip web drivers
-unzip -q $parent_path/cache/drivers/chromedriver_linux64.zip -d $parent_path/cache/drivers 
-tar -xvzf $parent_path/cache/drivers/geckodriver-v0.29.0-linux64.tar.gz -C $parent_path/cache/drivers 
+GECKO_DRIVER_VERSION='v0.29.0'
+wget https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRIVER_VERSION/geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz
+tar -xvzf geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz -C $parent_path/cache/drivers
+rm geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz
+chmod +x $parent_path/cache/drivers/geckodriver
+sudo cp $parent_path/cache/drivers/geckodriver /usr/bin/
+echo "browser_driver_path="\"/usr/bin/geckodriver"\"" > $parent_path/driver.ini
 
 # cleanup and setup python virtual env
 pipenv --rm
