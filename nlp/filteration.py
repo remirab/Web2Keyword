@@ -1,25 +1,25 @@
 from cleantext import clean
-from nlp import Briefing, WordToVec
+from nlp import Digester, WordToVec
 
-class Filteration:
+class Purificator:
     __instance__ = None
 
     def __init__(self):
-        self.brief = Briefing.get_instance()
+        self.digesting = Digester.get_instance()
         self.word2vec = WordToVec.get_instance()
-        if Filteration.__instance__ is None:
-            Filteration.__instance__ = self
+        if Purificator.__instance__ is None:
+            Purificator.__instance__ = self
         else:
-            raise Exception("You can not create another Filteration class. Use Filteration.get_instance() instead.")
+            raise Exception("You can not create another Purificator class. Use Purificator.get_instance() instead.")
 
     @staticmethod
     def get_instance():
         """
         Static method to fetch the current instance.
         """
-        if not Filteration.__instance__:
-            Filteration()
-        return Filteration.__instance__
+        if not Purificator.__instance__:
+            Purificator()
+        return Purificator.__instance__
 
     def text_cleaner(self, text_body: str)-> str:
         return clean(
@@ -34,7 +34,7 @@ class Filteration:
             replace_with_url="")
 
     def stop_word_cleaner(self, text_body: str)-> list:
-        return [word for word in text_body.split(" ") if word not in self.brief.en_stop_words]
+        return [word for word in text_body.split(" ") if word not in self.digesting.en_stop_words]
 
     def non_vocab_cleaner(self, words: list)-> list:
         return [word for word in words if self.word2vec.word_in_vocab(word)]
