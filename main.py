@@ -29,7 +29,7 @@ if __name__ == "__main__":
     options = {
         "bind": '%s:%s' % (f"{settings.HOST}", f"{settings.PORT}"),
         'workers': number_of_workers(),
-        "timeout": 120
+        "timeout": settings.W_TIMEOUT
     }
     with open('driver.ini') as file:
         line = file.readlines()
