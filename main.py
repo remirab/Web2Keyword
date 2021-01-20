@@ -1,5 +1,6 @@
 # system imports
 import multiprocessing
+from math import ceil
 
 # API runner imports
 from api import create_app
@@ -17,7 +18,7 @@ from scraper import Crawler
 from nlp import Digester, WordToVec, Purificator
 
 def number_of_workers():
-    return (multiprocessing.cpu_count() * 2) + 1
+    return ceil(multiprocessing.cpu_count() / 2)
 
 if __name__ == "__main__":
     # create important Scrapper and NLP instances
@@ -29,6 +30,6 @@ if __name__ == "__main__":
     options = {
         "bind": '%s:%s' % (f"{settings.HOST}", f"{settings.PORT}"),
         'workers': number_of_workers(),
-        "timeout": 300
+        "timeout": 120
     }
     MyCustomApplication(create_app(crawling, digesting, purify, word2vec, WEB_DRIVERS), options).run()
