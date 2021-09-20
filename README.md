@@ -86,6 +86,10 @@ Please send `POST requests` to the Web2Keyword API and wait for response:
 ```
 http://127.0.0.1:8080/query?url=https://nanos.ai/&input_list=["digital marketing", "digital marketing tool"]
 ```
+#### API Methods:
++ **HOST:PORT/query** : POST/GET HTTP requests accepting arguments: url=http://john.doe/&input_list=["sentence","or","word"]
++ **HOST:PORT/test** : POST/GET HTTP requests with simple response for testing API service health
+
 Answer would be similar as follow. { "similar_keyword": similarity } *in scale of (0.09, 1]*
 ```json
 {
