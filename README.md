@@ -1,5 +1,5 @@
 # Web2Keyword
-Extract Most Relevant Keywords from Webpage to the given list of sentences or words.
+Extract Most Relevant Keywords from Webpage to the given list of sentences or words..
 
 ## Sequence Diagram
 ```mermaid
